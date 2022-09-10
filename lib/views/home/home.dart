@@ -13,15 +13,38 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(toolbarHeight: 100, title: const AppBarWidget()),
-        body: Column(
-          children: [
-            Row(
-              children: const [
-                IconWidget(type: "products"),
-                IconWidget(type: "orders")
-              ],
-            ),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: const [
+                  IconWidget(type: "products"),
+                  IconWidget(type: "orders")
+                ],
+              ),
+              // DropdownButton(
+              //   items: [
+              //   DropdownMenuItem(child: Text('Orders awaiting to be accepted')),
+              //   DropdownMenuItem(child: Text('Orders in progress')),
+              // ], onChanged: (value) => print(value)),
+              const Text(
+                'Orders awaiting to be accepted',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const Divider(
+                color: GlobalColors.silver,
+              ),
+              const Text(
+                'Orders in progress',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const Divider(
+                color: GlobalColors.silver,
+              ),
+            ],
+          ),
         ));
   }
 }
@@ -39,9 +62,9 @@ class IconWidget extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(
           top: 16,
-          left: type == "products" ? 16 : 8,
+          left: type == "products" ? 0 : 8,
           bottom: 16,
-          right: type == "products" ? 8 : 16,
+          right: type == "products" ? 8 : 0,
         ),
         height: 50,
         decoration: BoxDecoration(
