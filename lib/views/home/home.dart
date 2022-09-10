@@ -17,9 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: const [
-                IconWidget(
-                  type: "products",
-                ),
+                IconWidget(type: "products"),
                 IconWidget(type: "orders")
               ],
             ),

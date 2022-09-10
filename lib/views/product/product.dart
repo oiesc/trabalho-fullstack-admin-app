@@ -16,6 +16,7 @@ class _ProductScreenState extends State<ProductScreen> {
       body: Scrollbar(
         thumbVisibility: true,
         child: ListView.builder(
+          shrinkWrap: true,
           itemCount: 10,
           itemBuilder: (context, index) => Column(
             children: [
