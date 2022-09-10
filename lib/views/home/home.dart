@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 IconWidget(type: "orders")
               ],
-            )
+            ),
           ],
         ));
   }
@@ -50,39 +50,44 @@ class IconWidget extends StatelessWidget {
           color: type == "products" ? GlobalColors.orange : GlobalColors.green,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: SizedBox(
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => Navigator.pushNamed(
+              context, type == "products" ? "/products" : "/orders"),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: Icon(
+                  type == "products"
+                      ? Icons.lunch_dining_rounded
+                      : Icons.format_list_numbered_rounded,
+                  color: GlobalColors.white,
+                  size: 30,
+                ),
+              ),
+            ),
+            Expanded(
+                child: Text(
+              type == "products" ? 'Products' : 'Orders',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: GlobalColors.white,
+              ),
+            )),
+            const SizedBox(
               width: 40,
               height: 40,
               child: Icon(
-                type == "products"
-                    ? Icons.lunch_dining_rounded
-                    : Icons.format_list_numbered_rounded,
+                Icons.expand_more,
                 color: GlobalColors.white,
-                size: 30,
               ),
             ),
-          ),
-          Expanded(
-              child: Text(
-            type == "products" ? 'Products' : 'Orders',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: GlobalColors.white,
-            ),
-          )),
-          const SizedBox(
-            width: 40,
-            height: 40,
-            child: Icon(
-              Icons.expand_more,
-              color: GlobalColors.white,
-            ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

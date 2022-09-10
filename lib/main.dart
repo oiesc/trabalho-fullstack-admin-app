@@ -1,5 +1,7 @@
 import 'package:adminapp/resources/global_colors.dart';
-import 'package:adminapp/views/home/index.dart';
+import 'package:adminapp/views/home/home.dart';
+import 'package:adminapp/views/order/order.dart';
+import 'package:adminapp/views/product/product.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,11 +23,23 @@ class MyApp extends StatelessWidget {
           primaryColor: GlobalColors.maroon,
           scaffoldBackgroundColor: GlobalColors.white,
           appBarTheme: const AppBarTheme(backgroundColor: GlobalColors.maroon),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(152, 56),
+              shape: const StadiumBorder(),
+              backgroundColor: GlobalColors.maroon,
+              padding: const EdgeInsets.all(16),
+            ),
+          ),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              backgroundColor: GlobalColors.maroon),
           primarySwatch: Colors.blue,
         ),
         initialRoute: '/',
         routes: {
           '/': (context) => const HomeScreen(),
+          '/products': (context) => const ProductScreen(),
+          '/orders': (context) => const OrderScreen(),
         });
   }
 }
