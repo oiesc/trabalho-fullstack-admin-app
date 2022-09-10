@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconWidget(
                   type: "products",
                 ),
-                IconWidget(type: "requests")
+                IconWidget(type: "orders")
               ],
             )
           ],
@@ -67,7 +67,7 @@ class IconWidget extends StatelessWidget {
           ),
           Expanded(
               child: Text(
-            type == "products" ? 'Products' : 'Requests',
+            type == "products" ? 'Products' : 'Orders',
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
