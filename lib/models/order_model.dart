@@ -35,10 +35,6 @@ class OrderModel {
     }
     data['status'] = status;
     data['usuario'] = usuario;
-    if (productsName != null) {
-      data['productsName'] =
-          productsName!.reduce((value, element) => value + ', ' + element);
-    }
     return data;
   }
 }
