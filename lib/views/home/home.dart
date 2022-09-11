@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final homeController = GetIt.I.get<HomeController>();
+  final scrollController = ScrollController();
 
   @override
   void initState() {
@@ -20,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -29,32 +31,37 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(toolbarHeight: 100, title: const AppBarWidget()),
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: const [
-                  IconWidget(type: "products"),
-                  IconWidget(type: "orders")
+          child: Scrollbar(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: const [
+                      IconWidget(type: "products"),
+                      IconWidget(type: "orders")
+                    ],
+                  ),
+                  Observer(builder: (_) {
+                    return DropdownButton(
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(8),
+                        alignment: Alignment.centerLeft,
+                        value: homeController.listValue,
+                        items: const [
+                          DropdownMenuItem(
+                              value: 1,
+                              child: Text('Orders awaiting to be accepted')),
+                          DropdownMenuItem(
+                              value: 2, child: Text('Orders in progress')),
+                        ],
+                        onChanged: (value) =>
+                            homeController.changeListValue(value));
+                  }),
                 ],
               ),
-              Observer(builder: (_) {
-                return DropdownButton(
-                    isExpanded: true,
-                    borderRadius: BorderRadius.circular(8),
-                    alignment: Alignment.centerLeft,
-                    value: homeController.listValue,
-                    items: const [
-                      DropdownMenuItem(
-                          value: 1,
-                          child: Text('Orders awaiting to be accepted')),
-                      DropdownMenuItem(
-                          value: 2, child: Text('Orders in progress')),
-                    ],
-                    onChanged: (value) =>
-                        homeController.changeListValue(value));
-              }),
-            ],
+            ),
           ),
         ));
   }
