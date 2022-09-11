@@ -115,7 +115,7 @@ class ProductWidget extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          padding: const EdgeInsets.only(bottom: 4),
                           child: Text.rich(
                             TextSpan(
                               text: "Category: ",
@@ -133,7 +133,7 @@ class ProductWidget extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          padding: const EdgeInsets.only(bottom: 4),
                           child: Text.rich(
                             TextSpan(
                               text: "Price: ",
@@ -152,15 +152,13 @@ class ProductWidget extends StatelessWidget {
                         ),
                       ]),
                 )),
-                Center(
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(50),
-                    onTap: () => print("teste $index"),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.more_vert_outlined,
-                      ),
+                InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () => print("teste $index"),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.more_vert_outlined,
                     ),
                   ),
                 ),
