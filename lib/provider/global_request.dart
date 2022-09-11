@@ -1,3 +1,4 @@
+import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_scaffold.dart';
 import 'package:dio/dio.dart';
 
@@ -24,7 +25,7 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      GlobalScaffold.instance.snackBarStatus(e.message);
+      showMessage(e.message, type: "error");
       return;
     }
   }
@@ -38,8 +39,43 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      GlobalScaffold.instance.snackBarStatus(e.message);
+      showMessage(e.message, type: "error");
       return;
     }
+  }
+
+  sendPatch(route) async {
+    try {
+      String endPoint = apiUrl + route;
+
+      var response = await _connection.patch(endPoint);
+
+      showMessage("orderUpdate", type: "success");
+      return response.data;
+    } on DioError catch (e) {
+      Exception(e.response);
+      showMessage(e.message, type: "error");
+      return;
+    }
+  }
+
+  getMessage(type) {
+    switch (type) {
+      case "orderUpdate":
+        return "The item has been successfully updated!";
+      case "orderCancel":
+        return "The item has been successfully canceled!";
+      default:
+        return type;
+    }
+  }
+
+  showMessage(request, {type}) {
+    GlobalScaffold.instance.snackBarStatus(getMessage(request),
+        color: type != null
+            ? type == "success"
+                ? GlobalColors.green
+                : GlobalColors.red
+            : null);
   }
 }

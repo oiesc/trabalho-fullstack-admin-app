@@ -52,6 +52,16 @@ class MyApp extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
               ),
             ),
+            outlinedButtonTheme: OutlinedButtonThemeData(
+              style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(
+                    GlobalColors.blue,
+                  ),
+                  side: MaterialStateProperty.all(const BorderSide(
+                      color: GlobalColors.blue,
+                      width: 1.0,
+                      style: BorderStyle.solid))),
+            ),
             floatingActionButtonTheme: const FloatingActionButtonThemeData(
                 backgroundColor: GlobalColors.maroon),
             primarySwatch: Colors.blue,

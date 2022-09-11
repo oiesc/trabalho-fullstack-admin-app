@@ -14,4 +14,12 @@ class GlobalApi {
 
     return orders;
   }
+
+  Future<OrderModel> acceptOrder(id) async {
+    var ret = await provider.sendPatch("orders/$id/accept");
+
+    OrderModel order = OrderModel.fromJson(ret);
+
+    return order;
+  }
 }
