@@ -24,7 +24,7 @@ class _ProductDataState extends State<ProductData> {
   @override
   void dispose() {
     scrollController.dispose();
-    productController.reset();
+    productController.dispose();
     super.dispose();
   }
 

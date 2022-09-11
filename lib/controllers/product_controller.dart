@@ -15,7 +15,7 @@ abstract class _ProductControllerBase with Store {
   @action
   changeProductCategory(value) => productCategory = value;
 
-  reset() {
+  dispose() {
     productName.clear();
     productDescription.clear();
     productPhotoUrl.clear();
