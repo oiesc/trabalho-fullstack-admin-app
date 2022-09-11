@@ -154,7 +154,7 @@ class OrderWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "ORDER #${order.id}",
+                          "ORDER #${order.idFormatted}",
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Padding(

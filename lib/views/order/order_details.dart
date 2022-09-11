@@ -52,7 +52,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               padding: const EdgeInsets.only(
                                   top: 16, left: 16, right: 16),
                               child: Text(
-                                "ORDER #${order?.id}",
+                                "ORDER #${order?.idFormatted}",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),

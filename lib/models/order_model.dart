@@ -2,6 +2,7 @@ import 'package:adminapp/models/product_model.dart';
 
 class OrderModel {
   String? id;
+  String? idFormatted;
   double? price;
   List<ProductModel>? products;
   String? status;
@@ -12,6 +13,7 @@ class OrderModel {
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    idFormatted = json['id'].split('-')[0];
     price = json['price'].toDouble();
     if (json['products'] != null) {
       products = <ProductModel>[];
