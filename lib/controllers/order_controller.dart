@@ -11,8 +11,8 @@ abstract class _OrderControllerBase with Store {
 
   dispose() {
     listValue = 1;
-    orders = null;
     changeLoading(false);
+    changeListValue(2);
   }
 
   @observable

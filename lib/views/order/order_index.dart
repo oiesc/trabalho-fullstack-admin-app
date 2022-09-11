@@ -15,16 +15,18 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   final orderController = GetIt.I.get<OrderController>();
+  final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    orderController.getOrders();
+    orderController.changeListValue(1);
   }
 
   @override
   void dispose() {
     orderController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -35,7 +37,7 @@ class _OrderScreenState extends State<OrderScreen> {
         body: Observer(builder: (_) {
           return Container(
             child: orderController.isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? const LoadingWidget()
                 : Column(
                     children: [
                       Container(
@@ -73,36 +75,49 @@ class _OrderScreenState extends State<OrderScreen> {
                           child: orderController.orders!.isEmpty
                               ? const EmptyWidget()
                               : Scrollbar(
+                                  controller: scrollController,
                                   thumbVisibility: true,
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        orderController.orders?.length ?? 0,
-                                    itemBuilder: (context, index) =>
-                                        OrderWidget(
-                                      id: "${orderController.orders?[index].id}",
-                                      index: index,
-                                      customerName:
-                                          "${orderController.orders?[index].usuario}",
-                                      status:
-                                          "${orderController.orders?[index].status}",
-                                      statusColor: GlobalFunctions()
-                                          .getStatusColor(orderController
-                                              .orders?[index].status),
-                                      productsName: GlobalFunctions()
-                                          .getProductsName(orderController
-                                              .orders?[index].productsName),
-                                      totalPrice:
-                                          "${orderController.orders?[index].price}",
-                                    ),
-                                  ),
-                                ),
+                                  child: SingleChildScrollView(
+                                    controller: scrollController,
+                                    child: OrdersWidget(
+                                        orderController: orderController),
+                                  )),
                         );
                       }),
                     ],
                   ),
           );
         }));
+  }
+}
+
+class OrdersWidget extends StatelessWidget {
+  const OrdersWidget({
+    Key? key,
+    required this.orderController,
+  }) : super(key: key);
+
+  final OrderController orderController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      primary: false,
+      shrinkWrap: true,
+      itemCount: orderController.orders?.length ?? 0,
+      itemBuilder: (context, index) => OrderWidget(
+        id: "${orderController.orders?[index].id}",
+        index: index,
+        customerName: "${orderController.orders?[index].usuario}",
+        status: "${orderController.orders?[index].status}",
+        statusColor: GlobalFunctions()
+            .getStatusColor(orderController.orders?[index].status),
+        productsName: GlobalFunctions()
+            .getProductsName(orderController.orders?[index].productsName),
+        totalPrice:
+            GlobalFunctions().formatReal(orderController.orders?[index].price),
+      ),
+    );
   }
 }
 

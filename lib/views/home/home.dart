@@ -1,5 +1,8 @@
 import 'package:adminapp/controllers/home_controller.dart';
+import 'package:adminapp/controllers/order_controller.dart';
 import 'package:adminapp/resources/global_colors.dart';
+import 'package:adminapp/resources/global_widgets.dart';
+import 'package:adminapp/views/order/order_index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -12,11 +15,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final homeController = GetIt.I.get<HomeController>();
+  final orderController = GetIt.I.get<OrderController>();
   final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    orderController.getOrders();
+    homeController.changeListValue(1);
   }
 
   @override
@@ -29,41 +35,61 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(toolbarHeight: 100, title: const AppBarWidget()),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Scrollbar(
+        body: Observer(builder: (_) {
+          return Scrollbar(
+            controller: scrollController,
             child: SingleChildScrollView(
               controller: scrollController,
               child: Column(
+                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: const [
-                      IconWidget(type: "products"),
-                      IconWidget(type: "orders")
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: const [
+                        IconWidget(type: "products"),
+                        IconWidget(type: "orders")
+                      ],
+                    ),
                   ),
-                  Observer(builder: (_) {
-                    return DropdownButton(
-                        isExpanded: true,
-                        borderRadius: BorderRadius.circular(8),
-                        alignment: Alignment.centerLeft,
-                        value: homeController.listValue,
-                        items: const [
-                          DropdownMenuItem(
-                              value: 1,
-                              child: Text('Orders awaiting to be accepted')),
-                          DropdownMenuItem(
-                              value: 2, child: Text('Orders in progress')),
-                        ],
-                        onChanged: (value) =>
-                            homeController.changeListValue(value));
-                  }),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: DropdownButton(
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(8),
+                      alignment: Alignment.centerLeft,
+                      value: homeController.listValue,
+                      items: const [
+                        DropdownMenuItem(
+                            value: 1,
+                            child: Text('Orders awaiting to be accepted')),
+                        DropdownMenuItem(
+                            value: 2, child: Text('Orders in progress')),
+                      ],
+                      onChanged: (value) =>
+                          homeController.changeListValue(value),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      orderController.isLoading
+                          ? const Padding(
+                              padding: EdgeInsets.all(16),
+                              child: LoadingWidget(),
+                            )
+                          : orderController.orders!.isEmpty
+                              ? const Center(child: EmptyWidget())
+                              : OrdersWidget(orderController: orderController)
+                    ],
+                  )
                 ],
               ),
             ),
-          ),
-        ));
+          );
+        }));
   }
 }
 
