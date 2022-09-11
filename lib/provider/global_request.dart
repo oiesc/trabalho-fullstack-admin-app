@@ -25,7 +25,7 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      _showMessage(e.message, type: "error");
+      _showMessage(e.response?.data['message'], type: "error");
       return false;
     }
   }
@@ -39,7 +39,7 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      _showMessage(e.message, type: "error");
+      _showMessage(e.response?.data['message'], type: "error");
       return false;
     }
   }
@@ -54,7 +54,7 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      _showMessage(e.message, type: "error");
+      _showMessage(e.response?.data['message'], type: "error");
       return false;
     }
   }
