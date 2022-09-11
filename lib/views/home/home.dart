@@ -1,14 +1,28 @@
+import 'package:adminapp/controllers/home_controller.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final homeController = GetIt.I.get<HomeController>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,25 +38,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconWidget(type: "orders")
                 ],
               ),
-              // DropdownButton(
-              //   items: [
-              //   DropdownMenuItem(child: Text('Orders awaiting to be accepted')),
-              //   DropdownMenuItem(child: Text('Orders in progress')),
-              // ], onChanged: (value) => print(value)),
-              const Text(
-                'Orders awaiting to be accepted',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const Divider(
-                color: GlobalColors.silver,
-              ),
-              const Text(
-                'Orders in progress',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const Divider(
-                color: GlobalColors.silver,
-              ),
+              Observer(builder: (_) {
+                return DropdownButton(
+                    isExpanded: true,
+                    borderRadius: BorderRadius.circular(8),
+                    alignment: Alignment.centerLeft,
+                    value: homeController.listValue,
+                    items: const [
+                      DropdownMenuItem(
+                          value: 1,
+                          child: Text('Orders awaiting to be accepted')),
+                      DropdownMenuItem(
+                          value: 2, child: Text('Orders in progress')),
+                    ],
+                    onChanged: (value) =>
+                        homeController.changeListValue(value));
+              }),
             ],
           ),
         ));
