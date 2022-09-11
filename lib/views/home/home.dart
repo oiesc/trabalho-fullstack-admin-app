@@ -162,7 +162,7 @@ class AppBarWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 8),
               child: Text(
-                'ADM APP',
+                'Management App',
                 style: TextStyle(fontSize: 14),
               ),
             )
