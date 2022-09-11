@@ -1,6 +1,7 @@
 import 'package:adminapp/controllers/order_controller.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_functions.dart';
+import 'package:adminapp/resources/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -67,32 +68,37 @@ class _OrderScreenState extends State<OrderScreen> {
                             onChanged: (value) =>
                                 orderController.changeListValue(value)),
                       ),
-                      Expanded(
-                        child: Scrollbar(
-                          thumbVisibility: true,
-                          child: Observer(builder: (_) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: orderController.orders?.length ?? 0,
-                              itemBuilder: (context, index) => OrderWidget(
-                                id: "${orderController.orders?[index].id}",
-                                index: index,
-                                customerName:
-                                    "${orderController.orders?[index].usuario}",
-                                status:
-                                    "${orderController.orders?[index].status}",
-                                statusColor: GlobalFunctions().getStatusColor(
-                                    orderController.orders?[index].status),
-                                productsName: GlobalFunctions().getProductsName(
-                                    orderController
-                                        .orders?[index].productsName),
-                                totalPrice:
-                                    "${orderController.orders?[index].price}",
-                              ),
-                            );
-                          }),
-                        ),
-                      ),
+                      Observer(builder: (_) {
+                        return Expanded(
+                          child: orderController.orders!.isEmpty
+                              ? const EmptyWidget()
+                              : Scrollbar(
+                                  thumbVisibility: true,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        orderController.orders?.length ?? 0,
+                                    itemBuilder: (context, index) =>
+                                        OrderWidget(
+                                      id: "${orderController.orders?[index].id}",
+                                      index: index,
+                                      customerName:
+                                          "${orderController.orders?[index].usuario}",
+                                      status:
+                                          "${orderController.orders?[index].status}",
+                                      statusColor: GlobalFunctions()
+                                          .getStatusColor(orderController
+                                              .orders?[index].status),
+                                      productsName: GlobalFunctions()
+                                          .getProductsName(orderController
+                                              .orders?[index].productsName),
+                                      totalPrice:
+                                          "${orderController.orders?[index].price}",
+                                    ),
+                                  ),
+                                ),
+                        );
+                      }),
                     ],
                   ),
           );

@@ -53,8 +53,8 @@ abstract class _OrderControllerBase with Store {
   @action
   getOrders() async {
     changeLoading(true);
-    orders = await rep.getOrders();
-    bkpOrders = orders;
+    bkpOrders = await rep.getOrders();
+    orders = bkpOrders;
     changeLoading(false);
   }
 }

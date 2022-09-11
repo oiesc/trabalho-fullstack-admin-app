@@ -1,4 +1,5 @@
 import 'package:adminapp/resources/global_colors.dart';
+import 'package:intl/intl.dart';
 
 class GlobalFunctions {
   getProductsName(productsList) {
@@ -16,5 +17,10 @@ class GlobalFunctions {
       default:
         return GlobalColors.blue;
     }
+  }
+
+  formatReal(value) {
+    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt-br');
+    return formatter.format(value);
   }
 }
