@@ -65,101 +65,103 @@ class OrderWidget extends StatelessWidget {
           const Divider(
             color: GlobalColors.silver,
           ),
-        Container(
-          margin: EdgeInsets.only(
-              left: 8, right: 8, bottom: 8, top: index > 0 ? 8 : 16),
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "ORDER #$id",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Text.rich(
-                          TextSpan(
-                            text: "Costumer name: ",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            children: [
-                              TextSpan(
-                                text: customerName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text.rich(
-                          TextSpan(
-                            text: "Status: ",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            children: [
-                              TextSpan(
-                                text: status,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: statusColor,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text.rich(
-                          TextSpan(
-                            text: "Products: ",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            children: [
-                              TextSpan(
-                                text: productsName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Text.rich(
-                        TextSpan(
-                          text: "Total price: ",
+        InkWell(
+          onTap: () => print("teste $index"),
+          child: Container(
+            margin: EdgeInsets.only(
+                left: 8, right: 8, bottom: 8, top: index > 0 ? 8 : 16),
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "ORDER #$id",
                           style: const TextStyle(fontWeight: FontWeight.bold),
-                          children: [
-                            TextSpan(
-                              text: totalPrice,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )
-                          ],
                         ),
-                      ),
-                    ]),
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(50),
-                onTap: () => print("teste $index"),
-                child: const Padding(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Text.rich(
+                            TextSpan(
+                              text: "Costumer name: ",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              children: [
+                                TextSpan(
+                                  text: customerName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text.rich(
+                            TextSpan(
+                              text: "Status: ",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              children: [
+                                TextSpan(
+                                  text: status,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: statusColor,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text.rich(
+                            TextSpan(
+                              text: "Products: ",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              children: [
+                                TextSpan(
+                                  text: productsName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Text.rich(
+                          TextSpan(
+                            text: "Total price: ",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                text: totalPrice,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ]),
+                ),
+                const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.more_vert_outlined,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

@@ -71,70 +71,70 @@ class ProductWidget extends StatelessWidget {
           const Divider(
             color: GlobalColors.silver,
           ),
-        Container(
-          margin: EdgeInsets.only(
-              left: 8, right: 8, bottom: 8, top: index > 0 ? 8 : 16),
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(8),
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: GlobalColors.silver),
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: photo != null
-                          ? NetworkImage(photo!)
-                          : const AssetImage("assets/images/burger.png")
-                              as ImageProvider,
+        InkWell(
+          onTap: () => print('teste'),
+          child: Container(
+            margin: EdgeInsets.only(
+                left: 8, right: 8, bottom: 8, top: index > 0 ? 8 : 16),
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    height: 80,
+                    width: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: GlobalColors.silver),
+                      image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: photo != null
+                            ? NetworkImage(photo!)
+                            : const AssetImage("assets/images/burger.png")
+                                as ImageProvider,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Text(
-                            description,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Text.rich(
-                            TextSpan(
-                              text: "Category: ",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              children: [
-                                TextSpan(
-                                  text: category,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                )
-                              ],
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Text.rich(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: Text(
+                              description,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Text.rich(
+                              TextSpan(
+                                text: "Category: ",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                children: [
+                                  TextSpan(
+                                    text: category,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Text.rich(
                             TextSpan(
                               text: "Price: ",
                               style:
@@ -149,20 +149,16 @@ class ProductWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                      ]),
-                )),
-                InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () => print("teste $index"),
-                  child: const Padding(
+                        ]),
+                  )),
+                  const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.more_vert_outlined,
                     ),
                   ),
-                ),
-              ]),
+                ]),
+          ),
         ),
       ],
     );
