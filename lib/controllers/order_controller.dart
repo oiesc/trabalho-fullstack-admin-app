@@ -1,3 +1,4 @@
+import 'package:adminapp/models/order_model.dart';
 import 'package:adminapp/repositories/global_api.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -8,17 +9,52 @@ class OrderController = _OrderControllerBase with _$OrderController;
 abstract class _OrderControllerBase with Store {
   final GlobalApi rep = GetIt.I.get<GlobalApi>();
 
+  dispose() {
+    listValue = 1;
+    orders = null;
+    changeLoading(false);
+  }
+
+  @observable
+  bool isLoading = false;
+
+  @action
+  changeLoading(value) => isLoading = value;
+
   @observable
   int listValue = 1;
 
   @action
-  changeListValue(value) => listValue = value;
+  changeListValue(value) {
+    listValue = value;
+    if (value == 2) {
+      orders =
+          bkpOrders?.where((element) => element.status == 'pending').toList();
+    } else if (value == 3) {
+      orders =
+          bkpOrders?.where((element) => element.status == 'accepted').toList();
+    } else if (value == 4) {
+      orders =
+          bkpOrders?.where((element) => element.status == 'canceled').toList();
+    } else if (value == 5) {
+      orders =
+          bkpOrders?.where((element) => element.status == 'completed').toList();
+    } else {
+      orders = bkpOrders;
+    }
+  }
 
-  void getOrders() async {
-    var temp = await rep.getOrders();
+  @observable
+  List<OrderModel>? orders;
 
-    temp.forEach((element) {
-      print(element.toJson());
-    });
+  @observable
+  List<OrderModel>? bkpOrders;
+
+  @action
+  getOrders() async {
+    changeLoading(true);
+    orders = await rep.getOrders();
+    bkpOrders = orders;
+    changeLoading(false);
   }
 }
