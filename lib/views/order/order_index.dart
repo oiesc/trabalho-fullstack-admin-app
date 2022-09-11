@@ -59,6 +59,7 @@ class _OrderScreenState extends State<OrderScreen> {
           }),
           Expanded(
             child: Scrollbar(
+              thumbVisibility: true,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: 10,
