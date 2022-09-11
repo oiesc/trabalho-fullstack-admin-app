@@ -198,11 +198,8 @@ class OrderWidget extends StatelessWidget {
                         ),
                       ]),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.more_vert_outlined,
-                  ),
+                const Icon(
+                  Icons.more_vert_outlined,
                 ),
               ],
             ),

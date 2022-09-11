@@ -2,8 +2,8 @@ import 'package:adminapp/controllers/home_controller.dart';
 import 'package:adminapp/controllers/order_controller.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/views/home/home.dart';
-import 'package:adminapp/views/order/order.dart';
-import 'package:adminapp/views/product/product.dart';
+import 'package:adminapp/views/order/order_index.dart';
+import 'package:adminapp/views/product/product_index.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
