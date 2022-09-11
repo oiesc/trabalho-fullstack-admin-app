@@ -61,8 +61,7 @@ class _OrderScreenState extends State<OrderScreen> {
                             items: const [
                               DropdownMenuItem(value: 1, child: Text('All')),
                               DropdownMenuItem(
-                                  value: 2,
-                                  child: Text('Awaiting to be accepted')),
+                                  value: 2, child: Text('Pending')),
                               DropdownMenuItem(
                                   value: 3, child: Text('In progress')),
                               DropdownMenuItem(

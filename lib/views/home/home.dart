@@ -62,8 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       value: homeController.listValue,
                       items: const [
                         DropdownMenuItem(
-                            value: 1,
-                            child: Text('Orders awaiting to be accepted')),
+                            value: 1, child: Text('Pending orders')),
                         DropdownMenuItem(
                             value: 2, child: Text('Orders in progress')),
                       ],
