@@ -1,6 +1,7 @@
 import 'package:adminapp/controllers/home_controller.dart';
 import 'package:adminapp/controllers/order_controller.dart';
 import 'package:adminapp/controllers/product_controller.dart';
+import 'package:adminapp/provider/global_request.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_scaffold.dart';
 import 'package:adminapp/views/home/home.dart';
@@ -11,6 +12,7 @@ import 'package:get_it/get_it.dart';
 
 void main() async {
   GetIt getIt = GetIt.I;
+  getIt.registerLazySingleton<GlobalProvider>(() => GlobalProvider());
   getIt.registerLazySingleton<HomeController>(() => HomeController());
   getIt.registerLazySingleton<OrderController>(() => OrderController());
   getIt.registerLazySingleton<ProductController>(() => ProductController());
