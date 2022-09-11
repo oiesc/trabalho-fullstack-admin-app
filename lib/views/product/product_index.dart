@@ -1,4 +1,5 @@
 import 'package:adminapp/resources/global_colors.dart';
+import 'package:adminapp/views/product/product_data.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _ProductScreenState extends State<ProductScreen> {
             children: [
               ProductWidget(
                 index: index,
+                id: "newId",
                 name: "Product Name",
                 description: "Description",
                 category: "Category Name",
@@ -36,7 +38,11 @@ class _ProductScreenState extends State<ProductScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProductData(),
+            )),
         child: const Icon(
           Icons.add,
         ),
@@ -49,6 +55,7 @@ class ProductWidget extends StatelessWidget {
   const ProductWidget({
     Key? key,
     required this.index,
+    required this.id,
     required this.name,
     required this.description,
     required this.category,
@@ -57,6 +64,7 @@ class ProductWidget extends StatelessWidget {
   }) : super(key: key);
 
   final int index;
+  final String id;
   final String name;
   final String description;
   final String category;
@@ -72,7 +80,13 @@ class ProductWidget extends StatelessWidget {
             color: GlobalColors.silver,
           ),
         InkWell(
-          onTap: () => print('teste'),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductData(
+                  productId: id,
+                ),
+              )),
           child: Container(
             margin: EdgeInsets.only(
                 left: 8, right: 8, bottom: 8, top: index > 0 ? 8 : 16),
