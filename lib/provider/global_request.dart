@@ -39,6 +39,7 @@ class GlobalProvider {
     } on DioError catch (e) {
       Exception(e.response);
       GlobalScaffold.instance.snackBarStatus(e.message);
+      return;
     }
   }
 }
