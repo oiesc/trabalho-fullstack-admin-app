@@ -1,3 +1,4 @@
+import 'package:adminapp/controllers/home_controller.dart';
 import 'package:adminapp/models/order_model.dart';
 import 'package:adminapp/repositories/global_api.dart';
 import 'package:get_it/get_it.dart';
@@ -10,9 +11,7 @@ abstract class _OrderControllerBase with Store {
   final GlobalApi rep = GetIt.I.get<GlobalApi>();
 
   dispose() {
-    listValue = 1;
     changeLoading(false);
-    changeListValue(2);
   }
 
   @observable

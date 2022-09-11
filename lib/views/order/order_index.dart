@@ -1,3 +1,4 @@
+import 'package:adminapp/controllers/home_controller.dart';
 import 'package:adminapp/controllers/order_controller.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_functions.dart';
@@ -15,6 +16,7 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   final orderController = GetIt.I.get<OrderController>();
+  final homeController = GetIt.I.get<HomeController>();
   final scrollController = ScrollController();
 
   @override
@@ -26,6 +28,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void dispose() {
     orderController.dispose();
+    homeController.changeListValue(1);
     scrollController.dispose();
     super.dispose();
   }
