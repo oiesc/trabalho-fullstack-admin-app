@@ -62,7 +62,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   vertical: 4, horizontal: 16),
                               child: Text.rich(
                                 TextSpan(
-                                  text: "Costumer name: ",
+                                  text: "Costumer: ",
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                   children: [

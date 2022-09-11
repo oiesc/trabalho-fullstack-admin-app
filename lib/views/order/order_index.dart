@@ -161,7 +161,7 @@ class OrderWidget extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Text.rich(
                             TextSpan(
-                              text: "Costumer name: ",
+                              text: "Costumer: ",
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                               children: [

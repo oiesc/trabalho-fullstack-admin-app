@@ -40,55 +40,59 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(toolbarHeight: 100, title: const AppBarWidget()),
         body: Observer(builder: (_) {
-          return Scrollbar(
-            controller: scrollController,
-            child: SingleChildScrollView(
+          return RefreshIndicator(
+            onRefresh: () async => await orderController.getOrders(),
+            child: Scrollbar(
               controller: scrollController,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: const [
-                        IconWidget(type: "products"),
-                        IconWidget(type: "orders")
-                      ],
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                controller: scrollController,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: const [
+                          IconWidget(type: "products"),
+                          IconWidget(type: "orders")
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: DropdownButton(
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(8),
-                      alignment: Alignment.centerLeft,
-                      value: homeController.listValue,
-                      items: const [
-                        DropdownMenuItem(
-                            value: 1, child: Text('Pending orders')),
-                        DropdownMenuItem(
-                            value: 2, child: Text('Orders in progress')),
-                      ],
-                      onChanged: (value) =>
-                          homeController.changeListValue(value),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: DropdownButton(
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(8),
+                        alignment: Alignment.centerLeft,
+                        value: homeController.listValue,
+                        items: const [
+                          DropdownMenuItem(
+                              value: 1, child: Text('Pending orders')),
+                          DropdownMenuItem(
+                              value: 2, child: Text('Orders in progress')),
+                        ],
+                        onChanged: (value) =>
+                            homeController.changeListValue(value),
+                      ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      orderController.isLoading
-                          ? const Padding(
-                              padding: EdgeInsets.all(16),
-                              child: LoadingWidget(),
-                            )
-                          : orderController.orders!.isEmpty
-                              ? const Center(child: EmptyWidget())
-                              : OrdersWidget(orderController: orderController)
-                    ],
-                  )
-                ],
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        orderController.isLoading
+                            ? const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: LoadingWidget(),
+                              )
+                            : orderController.orders!.isEmpty
+                                ? const Center(child: EmptyWidget())
+                                : OrdersWidget(orderController: orderController)
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           );
