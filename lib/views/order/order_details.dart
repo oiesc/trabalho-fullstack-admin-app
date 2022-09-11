@@ -100,6 +100,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (index > 0)
+                      const Divider(
+                        color: GlobalColors.silver,
+                      ),
                     Padding(
                       padding:
                           const EdgeInsets.only(bottom: 4, left: 4, right: 4),
