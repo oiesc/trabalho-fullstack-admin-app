@@ -1,5 +1,8 @@
+import 'package:adminapp/controllers/order_controller.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -9,29 +12,69 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
+  final orderController = GetIt.I.get<OrderController>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Orders')),
-      body: Scrollbar(
-        thumbVisibility: true,
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 10,
-          itemBuilder: (context, index) => Column(
-            children: [
-              OrderWidget(
-                id: "K455s",
-                index: index,
-                customerName: "João Silva",
-                status: "Accepted",
-                statusColor: GlobalColors.green,
-                productsName: "Burger 1, Burger 2",
-                totalPrice: "R\$ 20.99",
+      body: Column(
+        children: [
+          Observer(builder: (_) {
+            return Container(
+              color: GlobalColors.green,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: DropdownButton(
+                  iconEnabledColor: GlobalColors.white,
+                  iconDisabledColor: GlobalColors.white,
+                  dropdownColor: GlobalColors.green,
+                  style: const TextStyle(
+                      color: GlobalColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                  isExpanded: true,
+                  borderRadius: BorderRadius.circular(8),
+                  alignment: Alignment.centerLeft,
+                  value: orderController.listValue,
+                  items: const [
+                    DropdownMenuItem(value: 1, child: Text('All')),
+                    DropdownMenuItem(
+                        value: 2, child: Text('Awaiting to be accepted')),
+                    DropdownMenuItem(value: 3, child: Text('In progress')),
+                    DropdownMenuItem(value: 4, child: Text('Canceled')),
+                    DropdownMenuItem(value: 5, child: Text('Completed')),
+                  ],
+                  onChanged: (value) => orderController.changeListValue(value)),
+            );
+          }),
+          Expanded(
+            child: Scrollbar(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 10,
+                itemBuilder: (context, index) => OrderWidget(
+                  id: "K455s",
+                  index: index,
+                  customerName: "João Silva",
+                  status: "Accepted",
+                  statusColor: GlobalColors.green,
+                  productsName: "Burger 1, Burger 2",
+                  totalPrice: "R\$ 20.99",
+                ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -69,7 +112,7 @@ class OrderWidget extends StatelessWidget {
           onTap: () => print("teste $index"),
           child: Container(
             margin: EdgeInsets.only(
-                left: 8, right: 8, bottom: 8, top: index > 0 ? 8 : 16),
+                left: 16, right: 16, bottom: 8, top: index > 0 ? 8 : 16),
             width: MediaQuery.of(context).size.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
