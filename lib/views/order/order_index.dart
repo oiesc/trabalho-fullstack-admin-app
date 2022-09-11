@@ -139,7 +139,7 @@ class OrderWidget extends StatelessWidget {
           onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const OrderDetails(),
+                builder: (context) => OrderDetails(order: order),
               )),
           child: Container(
             margin: EdgeInsets.only(
