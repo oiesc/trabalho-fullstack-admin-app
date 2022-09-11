@@ -21,14 +21,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    orderController.getOrders();
-    homeController.changeListValue(1);
+    init();
   }
 
   @override
   void dispose() {
     scrollController.dispose();
     super.dispose();
+  }
+
+  init() async {
+    await orderController.getOrders();
+    homeController.changeListValue(1);
   }
 
   @override

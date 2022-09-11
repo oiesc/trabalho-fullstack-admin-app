@@ -10,15 +10,31 @@ class GlobalApi {
 
     var ret = await provider.sendGet("orders");
 
-    ret.forEach((e) => orders.add(OrderModel.fromJson(e)));
+    if (ret != false) {
+      ret.forEach((e) => orders.add(OrderModel.fromJson(e)));
+    }
 
     return orders;
   }
 
   Future<OrderModel> acceptOrder(id) async {
-    var ret = await provider.sendPatch("orders/$id/accept");
+    var ret = await provider.sendPatch("orders/$id/accept", "orderUpdate");
 
-    OrderModel order = OrderModel.fromJson(ret);
+    OrderModel order = OrderModel();
+    if (ret != false) {
+      order = OrderModel.fromJson(ret);
+    }
+
+    return order;
+  }
+
+  Future<OrderModel> cancelOrder(id) async {
+    var ret = await provider.sendPatch("orders/$id/cancel", "orderCancel");
+
+    OrderModel order = OrderModel();
+    if (ret != false) {
+      order = OrderModel.fromJson(ret);
+    }
 
     return order;
   }

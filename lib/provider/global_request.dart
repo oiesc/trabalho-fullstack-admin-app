@@ -25,8 +25,8 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      showMessage(e.message, type: "error");
-      return;
+      _showMessage(e.message, type: "error");
+      return false;
     }
   }
 
@@ -39,27 +39,27 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      showMessage(e.message, type: "error");
-      return;
+      _showMessage(e.message, type: "error");
+      return false;
     }
   }
 
-  sendPatch(route) async {
+  sendPatch(route, requestType) async {
     try {
       String endPoint = apiUrl + route;
 
       var response = await _connection.patch(endPoint);
 
-      showMessage("orderUpdate", type: "success");
+      _showMessage(requestType, type: "success");
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      showMessage(e.message, type: "error");
-      return;
+      _showMessage(e.message, type: "error");
+      return false;
     }
   }
 
-  getMessage(type) {
+  _getMessage(type) {
     switch (type) {
       case "orderUpdate":
         return "The item has been successfully updated!";
@@ -70,8 +70,8 @@ class GlobalProvider {
     }
   }
 
-  showMessage(request, {type}) {
-    GlobalScaffold.instance.snackBarStatus(getMessage(request),
+  _showMessage(request, {type}) {
+    GlobalScaffold.instance.snackBarStatus(_getMessage(request),
         color: type != null
             ? type == "success"
                 ? GlobalColors.green

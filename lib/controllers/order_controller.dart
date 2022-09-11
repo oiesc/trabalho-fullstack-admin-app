@@ -54,5 +54,22 @@ abstract class _OrderControllerBase with Store {
     bkpOrders = await rep.getOrders();
     orders = bkpOrders;
     changeLoading(false);
+    changeListValue(listValue);
+  }
+
+  acceptOrder(id) async {
+    changeLoading(true);
+    var temp = await rep.acceptOrder(id);
+    getOrders();
+    changeLoading(false);
+    return temp.id;
+  }
+
+  cancelOrder(id) async {
+    changeLoading(true);
+    var temp = await rep.cancelOrder(id);
+    getOrders();
+    changeLoading(false);
+    return temp.id;
   }
 }
