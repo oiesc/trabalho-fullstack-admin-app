@@ -1,8 +1,10 @@
 import 'package:adminapp/controllers/home_controller.dart';
 import 'package:adminapp/controllers/order_controller.dart';
+import 'package:adminapp/models/order_model.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_functions.dart';
 import 'package:adminapp/resources/global_widgets.dart';
+import 'package:adminapp/views/order/order_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -108,16 +110,8 @@ class OrdersWidget extends StatelessWidget {
       shrinkWrap: true,
       itemCount: orderController.orders?.length ?? 0,
       itemBuilder: (context, index) => OrderWidget(
-        id: "${orderController.orders?[index].id}",
+        order: orderController.orders![index],
         index: index,
-        customerName: "${orderController.orders?[index].usuario}",
-        status: "${orderController.orders?[index].status}",
-        statusColor: GlobalFunctions()
-            .getStatusColor(orderController.orders?[index].status),
-        productsName: GlobalFunctions()
-            .getProductsName(orderController.orders?[index].productsName),
-        totalPrice:
-            GlobalFunctions().formatReal(orderController.orders?[index].price),
       ),
     );
   }
@@ -127,21 +121,11 @@ class OrderWidget extends StatelessWidget {
   const OrderWidget({
     Key? key,
     required this.index,
-    required this.id,
-    required this.customerName,
-    required this.status,
-    required this.statusColor,
-    required this.productsName,
-    required this.totalPrice,
+    required this.order,
   }) : super(key: key);
 
+  final OrderModel order;
   final int index;
-  final String id;
-  final String customerName;
-  final String status;
-  final Color statusColor;
-  final String productsName;
-  final String totalPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +136,11 @@ class OrderWidget extends StatelessWidget {
             color: GlobalColors.silver,
           ),
         InkWell(
-          onTap: () => print("teste $index"),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OrderDetails(),
+              )),
           child: Container(
             margin: EdgeInsets.only(
                 left: 16, right: 16, bottom: 8, top: index > 0 ? 8 : 16),
@@ -166,7 +154,7 @@ class OrderWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "ORDER #$id",
+                          "ORDER ${order.id}",
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Padding(
@@ -178,7 +166,7 @@ class OrderWidget extends StatelessWidget {
                                   const TextStyle(fontWeight: FontWeight.bold),
                               children: [
                                 TextSpan(
-                                  text: customerName,
+                                  text: order.usuario,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -196,10 +184,11 @@ class OrderWidget extends StatelessWidget {
                                   const TextStyle(fontWeight: FontWeight.bold),
                               children: [
                                 TextSpan(
-                                  text: status,
+                                  text: order.status,
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
-                                    color: statusColor,
+                                    color: GlobalFunctions()
+                                        .getStatusColor(order.status),
                                   ),
                                 )
                               ],
@@ -215,7 +204,8 @@ class OrderWidget extends StatelessWidget {
                                   const TextStyle(fontWeight: FontWeight.bold),
                               children: [
                                 TextSpan(
-                                  text: productsName,
+                                  text: GlobalFunctions()
+                                      .getProductsName(order.productsName),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -230,7 +220,7 @@ class OrderWidget extends StatelessWidget {
                             style: const TextStyle(fontWeight: FontWeight.bold),
                             children: [
                               TextSpan(
-                                text: totalPrice,
+                                text: GlobalFunctions().formatReal(order.price),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                 ),
