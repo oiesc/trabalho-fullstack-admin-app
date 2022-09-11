@@ -17,6 +17,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void initState() {
     super.initState();
+    orderController.getOrders();
   }
 
   @override

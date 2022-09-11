@@ -1,13 +1,13 @@
 class ProductModel {
   String? name;
-  int? price;
+  double? price;
   int? quantity;
 
   ProductModel({this.name, this.price, this.quantity});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    price = json['price'];
+    price = json['price'].toDouble();
     quantity = json['quantity'];
   }
 

@@ -6,6 +6,7 @@ class OrderModel {
   List<ProductModel>? products;
   String? status;
   String? usuario;
+  List? productsName;
 
   OrderModel({this.id, this.price, this.products, this.status, this.usuario});
 
@@ -14,9 +15,12 @@ class OrderModel {
     price = json['price'].toDouble();
     if (json['products'] != null) {
       products = <ProductModel>[];
+      productsName = [];
       json['products'].forEach((v) {
         products!.add(ProductModel.fromJson(v));
+        productsName!.add(v['name']);
       });
+      productsName = productsName!.toSet().toList();
     }
     status = json['status'];
     usuario = json['usuario'];
@@ -31,6 +35,10 @@ class OrderModel {
     }
     data['status'] = status;
     data['usuario'] = usuario;
+    if (productsName != null) {
+      data['productsName'] =
+          productsName!.reduce((value, element) => value + ', ' + element);
+    }
     return data;
   }
 }
