@@ -49,6 +49,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         color: GlobalColors.green,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: DropdownButton(
+                            underline: Container(),
                             iconEnabledColor: GlobalColors.white,
                             iconDisabledColor: GlobalColors.white,
                             dropdownColor: GlobalColors.green,

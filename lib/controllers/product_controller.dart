@@ -41,7 +41,24 @@ abstract class _ProductControllerBase with Store {
   }
 
   @observable
+  String? listValue;
+
+  @action
+  changeListValue(value) {
+    listValue = value;
+    if (value == "0") {
+      products = bkpProducts;
+    } else {
+      products = bkpProducts
+          ?.where((element) => element.category?.id == value)
+          .toList();
+    }
+  }
+
+  @observable
   List<CategoryModel>? categories;
+
+  List<CategoryModel> filter = [];
 
   @observable
   List<ProductModel>? products;
@@ -53,6 +70,9 @@ abstract class _ProductControllerBase with Store {
   getCategories() async {
     changeLoading(true);
     categories = await rep.getCategories();
+    filter = [];
+    filter.add(CategoryModel(id: "0", name: "All"));
+    filter.addAll(categories!.toList());
     changeLoading(false);
   }
 
@@ -61,6 +81,7 @@ abstract class _ProductControllerBase with Store {
     changeLoading(true);
     bkpProducts = await rep.getProducts();
     products = bkpProducts;
+    changeListValue("0");
     changeLoading(false);
   }
 
@@ -75,9 +96,19 @@ abstract class _ProductControllerBase with Store {
       price: double.parse(productPrice.text),
     );
 
-    var temp =
-        type == "update" ? await rep.updateProduct(product.toJson()) : null;
+    var temp = type == "update"
+        ? await rep.updateProduct(product.toJson())
+        : await rep.createProduct(product.toJson());
+    changeLoading(false);
     getProducts();
-    return temp?.id;
+    return temp.id;
+  }
+
+  deleteItem(id) async {
+    changeLoading(true);
+    var temp = await rep.deleteProduct(id);
+    changeLoading(false);
+    getProducts();
+    return temp;
   }
 }

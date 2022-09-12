@@ -61,12 +61,13 @@ class GlobalProvider {
     }
   }
 
-  productSendPost(route, data) async {
+  productSendPost(route, data, requestType) async {
     try {
       String endPoint = apiProductUrl + route;
 
       var response = await _connection.post(endPoint, data: data);
 
+      _showMessage(requestType, type: "success");
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
@@ -110,6 +111,7 @@ class GlobalProvider {
 
       var response = await _connection.delete(endPoint);
 
+      _showMessage("delete", type: "success");
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);

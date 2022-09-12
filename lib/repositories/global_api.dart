@@ -75,4 +75,19 @@ class GlobalApi {
 
     return product;
   }
+
+  Future<ProductModel> createProduct(data) async {
+    ProductModel product = ProductModel();
+
+    var ret = await provider.productSendPost("product/create", data, "create");
+    if (ret != false) {
+      product = ProductModel.fromJson(ret);
+    }
+
+    return product;
+  }
+
+  Future<bool> deleteProduct(id) async {
+    return await provider.productSendDelete("product/$id");
+  }
 }

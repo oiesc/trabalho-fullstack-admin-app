@@ -39,24 +39,61 @@ class _ProductScreenState extends State<ProductScreen> {
         return Container(
           child: productController.isLoading
               ? const LoadingWidget()
-              : Scrollbar(
-                  thumbVisibility: true,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: productController.products?.length ?? 0,
-                    itemBuilder: (context, index) => Column(
-                      children: [
-                        ProductWidget(
-                          index: index,
-                          product: productController.products![index],
-                        ),
-                        if (index == (productController.products!.length - 1))
-                          const SizedBox(
-                            height: 80,
-                          )
-                      ],
+              : Column(
+                  children: [
+                    Container(
+                      color: GlobalColors.orange,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: DropdownButton(
+                          underline: Container(),
+                          iconEnabledColor: GlobalColors.white,
+                          iconDisabledColor: GlobalColors.white,
+                          dropdownColor: GlobalColors.orange,
+                          style: const TextStyle(
+                              color: GlobalColors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                          isExpanded: true,
+                          borderRadius: BorderRadius.circular(8),
+                          alignment: Alignment.centerLeft,
+                          value: productController.listValue,
+                          items: productController.filter
+                              .map(
+                                (e) => DropdownMenuItem(
+                                    value: e.id, child: Text(e.name!)),
+                              )
+                              .toList(),
+                          onChanged: (value) =>
+                              productController.changeListValue(value)),
                     ),
-                  ),
+                    Expanded(
+                      child: productController.products!.isEmpty
+                          ? const EmptyWidget()
+                          : Scrollbar(
+                              thumbVisibility: true,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    productController.products?.length ?? 0,
+                                itemBuilder: (context, index) => Column(
+                                  children: [
+                                    ProductWidget(
+                                      index: index,
+                                      product:
+                                          productController.products![index],
+                                    ),
+                                    if (index ==
+                                        (productController.products!.length -
+                                            1))
+                                      const SizedBox(
+                                        height: 80,
+                                      )
+                                  ],
+                                ),
+                              ),
+                            ),
+                    ),
+                  ],
                 ),
         );
       }),
@@ -120,7 +157,7 @@ class ProductWidget extends StatelessWidget {
                         image: product.photoLocation != null &&
                                 product.photoLocation != ''
                             ? NetworkImage(product.photoLocation!)
-                            : const AssetImage("assets/images/burger.png")
+                            : const AssetImage("assets/images/no-image.png")
                                 as ImageProvider,
                       ),
                     ),

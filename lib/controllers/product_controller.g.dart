@@ -57,6 +57,22 @@ mixin _$ProductController on _ProductControllerBase, Store {
     });
   }
 
+  late final _$listValueAtom =
+      Atom(name: '_ProductControllerBase.listValue', context: context);
+
+  @override
+  String? get listValue {
+    _$listValueAtom.reportRead();
+    return super.listValue;
+  }
+
+  @override
+  set listValue(String? value) {
+    _$listValueAtom.reportWrite(value, super.listValue, () {
+      super.listValue = value;
+    });
+  }
+
   late final _$categoriesAtom =
       Atom(name: '_ProductControllerBase.categories', context: context);
 
@@ -147,11 +163,23 @@ mixin _$ProductController on _ProductControllerBase, Store {
   }
 
   @override
+  dynamic changeListValue(dynamic value) {
+    final _$actionInfo = _$_ProductControllerBaseActionController.startAction(
+        name: '_ProductControllerBase.changeListValue');
+    try {
+      return super.changeListValue(value);
+    } finally {
+      _$_ProductControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 productCategory: ${productCategory},
 id: ${id},
+listValue: ${listValue},
 categories: ${categories},
 products: ${products},
 bkpProducts: ${bkpProducts}

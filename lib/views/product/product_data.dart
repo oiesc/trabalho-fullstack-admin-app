@@ -1,5 +1,6 @@
 import 'package:adminapp/controllers/product_controller.dart';
 import 'package:adminapp/models/product_model.dart';
+import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_scaffold.dart';
 import 'package:adminapp/resources/global_widgets.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,22 @@ class _ProductDataState extends State<ProductData> {
                               }
                             },
                             child: const Text('Confirm')),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: TextButton(
+                          onPressed: () async {
+                            if (await productController
+                                .deleteItem(widget.product?.id)) {
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: const Text(
+                            'Delete Product',
+                            style: TextStyle(color: GlobalColors.red),
+                          ),
+                        ),
+                      ),
                     ]),
                   ),
           );
