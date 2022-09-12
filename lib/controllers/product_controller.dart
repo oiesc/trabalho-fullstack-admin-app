@@ -129,6 +129,7 @@ abstract class _ProductControllerBase with Store {
         ? await rep.updateCategory(category.toJson())
         : await rep.createCategory(category.toJson());
     changeLoading(false);
+    getProducts();
     getCategories();
     return temp;
   }
@@ -139,6 +140,7 @@ abstract class _ProductControllerBase with Store {
         CategoryModel(id: categoryId, name: categoryName.text);
     var temp = await rep.deleteCategory(category.toJson());
     changeLoading(false);
+    getProducts();
     getCategories();
     return temp;
   }
