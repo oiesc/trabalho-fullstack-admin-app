@@ -3,6 +3,7 @@ import 'package:adminapp/models/product_model.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_functions.dart';
 import 'package:adminapp/resources/global_widgets.dart';
+import 'package:adminapp/views/product/category_index.dart';
 import 'package:adminapp/views/product/product_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -34,7 +35,25 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Products')),
+      appBar: AppBar(
+        title: const Text('Products'),
+        actions: [
+          InkWell(
+            borderRadius: BorderRadius.circular(50),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CategoryScreen(),
+                )),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Icon(
+                Icons.category,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Observer(builder: (_) {
         return Container(
           child: productController.isLoading
@@ -67,7 +86,8 @@ class _ProductScreenState extends State<ProductScreen> {
                               productController.changeListValue(value)),
                     ),
                     Expanded(
-                      child: productController.products!.isEmpty
+                      child: productController.products == null ||
+                              productController.products!.isEmpty
                           ? const EmptyWidget()
                           : Scrollbar(
                               thumbVisibility: true,
