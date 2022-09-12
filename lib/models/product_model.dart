@@ -1,23 +1,59 @@
 class ProductModel {
+  String? id;
   String? name;
   double? price;
-  String? photo;
+  String? description;
+  String? photoLocation;
+  CategoryModel? category;
   int? quantity;
 
-  ProductModel({this.name, this.photo, this.price, this.quantity});
+  ProductModel(
+      {this.id,
+      this.name,
+      this.price,
+      this.description,
+      this.photoLocation,
+      this.category,
+      this.quantity});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'].toString();
     name = json['name'];
-    price = json['price'].toDouble();
+    price = double.parse(json['price'].toString());
+    description = json['description'];
     quantity = json['quantity'];
-    photo = json['photo'];
+    photoLocation = json['photoLocation'];
+    if (json['categoriesDto'] != null) {
+      category = CategoryModel.fromJson(json['categoriesDto']);
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['name'] = name;
     data['price'] = price;
-    data['quantity'] = quantity;
+    data['description'] = description;
+    data['photoLocation'] = photoLocation;
+    data['categoriesDto'] = category!.toJson();
+    return data;
+  }
+}
+
+class CategoryModel {
+  final String id;
+  final String? name;
+
+  CategoryModel({required this.id, this.name});
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(id: json['id'].toString(), name: json['name']);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }

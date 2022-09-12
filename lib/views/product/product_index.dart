@@ -1,6 +1,12 @@
+import 'package:adminapp/controllers/product_controller.dart';
+import 'package:adminapp/models/product_model.dart';
 import 'package:adminapp/resources/global_colors.dart';
+import 'package:adminapp/resources/global_functions.dart';
+import 'package:adminapp/resources/global_widgets.dart';
 import 'package:adminapp/views/product/product_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -10,33 +16,50 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  final productController = GetIt.I.get<ProductController>();
+
+  @override
+  void initState() {
+    super.initState();
+    productController.getCategories();
+    productController.getProducts();
+  }
+
+  @override
+  void dispose() {
+    productController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Products')),
-      body: Scrollbar(
-        thumbVisibility: true,
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 10,
-          itemBuilder: (context, index) => Column(
-            children: [
-              ProductWidget(
-                index: index,
-                id: "newId",
-                name: "Product Name",
-                description: "Description",
-                category: "Category Name",
-                price: "R\$ 20.00",
-              ),
-              if (index == 9)
-                const SizedBox(
-                  height: 80,
-                )
-            ],
-          ),
-        ),
-      ),
+      body: Observer(builder: (_) {
+        return Container(
+          child: productController.isLoading
+              ? const LoadingWidget()
+              : Scrollbar(
+                  thumbVisibility: true,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: productController.products?.length ?? 0,
+                    itemBuilder: (context, index) => Column(
+                      children: [
+                        ProductWidget(
+                          index: index,
+                          product: productController.products![index],
+                        ),
+                        if (index == (productController.products!.length - 1))
+                          const SizedBox(
+                            height: 80,
+                          )
+                      ],
+                    ),
+                  ),
+                ),
+        );
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(
             context,
@@ -55,21 +78,11 @@ class ProductWidget extends StatelessWidget {
   const ProductWidget({
     Key? key,
     required this.index,
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.category,
-    required this.price,
-    this.photo,
+    required this.product,
   }) : super(key: key);
 
   final int index;
-  final String id;
-  final String name;
-  final String description;
-  final String category;
-  final String price;
-  final String? photo;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +97,7 @@ class ProductWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => ProductData(
-                  productId: id,
+                  product: product,
                 ),
               )),
           child: Container(
@@ -104,8 +117,9 @@ class ProductWidget extends StatelessWidget {
                       border: Border.all(color: GlobalColors.silver),
                       image: DecorationImage(
                         fit: BoxFit.contain,
-                        image: photo != null
-                            ? NetworkImage(photo!)
+                        image: product.photoLocation != null &&
+                                product.photoLocation != ''
+                            ? NetworkImage(product.photoLocation!)
                             : const AssetImage("assets/images/burger.png")
                                 as ImageProvider,
                       ),
@@ -119,7 +133,7 @@ class ProductWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            name,
+                            "${product.name}",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -127,7 +141,7 @@ class ProductWidget extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: Text(
-                              description,
+                              "${product.description}",
                             ),
                           ),
                           Padding(
@@ -139,7 +153,7 @@ class ProductWidget extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                                 children: [
                                   TextSpan(
-                                    text: category,
+                                    text: "${product.category?.name}",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.normal,
                                     ),
@@ -155,7 +169,8 @@ class ProductWidget extends StatelessWidget {
                                   const TextStyle(fontWeight: FontWeight.bold),
                               children: [
                                 TextSpan(
-                                  text: price,
+                                  text: GlobalFunctions()
+                                      .formatReal(product.price),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.normal,
                                   ),

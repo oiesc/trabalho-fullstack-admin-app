@@ -14,11 +14,13 @@ class GlobalProvider {
     _configDioNetwork();
   }
 
-  final String apiUrl = "https://fathomless-reaches-54421.herokuapp.com/";
+  final String apiOrderUrl = "https://fathomless-reaches-54421.herokuapp.com/";
+  final String apiProductUrl =
+      "https://trabalho-fullstack-produto.herokuapp.com/";
 
-  sendPost(route, data) async {
+  orderSendPost(route, data) async {
     try {
-      String endPoint = apiUrl + route;
+      String endPoint = apiOrderUrl + route;
 
       var response = await _connection.post(endPoint, data: data);
 
@@ -30,9 +32,9 @@ class GlobalProvider {
     }
   }
 
-  sendGet(route) async {
+  orderSendGet(route) async {
     try {
-      String endPoint = apiUrl + route;
+      String endPoint = apiOrderUrl + route;
 
       var response = await _connection.get(endPoint);
 
@@ -44,9 +46,9 @@ class GlobalProvider {
     }
   }
 
-  sendPatch(route, requestType) async {
+  orderSendPatch(route, requestType) async {
     try {
-      String endPoint = apiUrl + route;
+      String endPoint = apiOrderUrl + route;
 
       var response = await _connection.patch(endPoint);
 
@@ -59,12 +61,73 @@ class GlobalProvider {
     }
   }
 
+  productSendPost(route, data) async {
+    try {
+      String endPoint = apiProductUrl + route;
+
+      var response = await _connection.post(endPoint, data: data);
+
+      return response.data;
+    } on DioError catch (e) {
+      Exception(e.response);
+      _showMessage(e.response?.data['message'], type: "error");
+      return false;
+    }
+  }
+
+  productSendGet(route) async {
+    try {
+      String endPoint = apiProductUrl + route;
+
+      var response = await _connection.get(endPoint);
+
+      return response.data;
+    } on DioError catch (e) {
+      Exception(e.response);
+      _showMessage(e.response?.data['message'], type: "error");
+      return false;
+    }
+  }
+
+  productSendPut(route, data, requestType) async {
+    try {
+      String endPoint = apiProductUrl + route;
+
+      var response = await _connection.put(endPoint, data: data);
+
+      _showMessage(requestType, type: "success");
+      return response.data;
+    } on DioError catch (e) {
+      Exception(e.response);
+      _showMessage(e.response?.data['message'], type: "error");
+      return false;
+    }
+  }
+
+  productSendDelete(route) async {
+    try {
+      String endPoint = apiProductUrl + route;
+
+      var response = await _connection.delete(endPoint);
+
+      return response.data;
+    } on DioError catch (e) {
+      Exception(e.response);
+      _showMessage(e.response?.data['message'], type: "error");
+      return false;
+    }
+  }
+
   _getMessage(type) {
     switch (type) {
-      case "orderUpdate":
+      case "update":
         return "The item has been successfully updated!";
-      case "orderCancel":
+      case "cancel":
         return "The item has been successfully canceled!";
+      case "create":
+        return "The item has been successfully created!";
+      case "delete":
+        return "The item has been successfully deleted!";
       default:
         return type;
     }
