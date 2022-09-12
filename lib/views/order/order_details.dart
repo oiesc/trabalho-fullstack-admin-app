@@ -35,7 +35,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Order #${order?.id}")),
+        appBar: AppBar(title: Text("Order #${order?.idFormatted}")),
         body: Observer(builder: (_) {
           return Container(
             child: orderController.isLoading
