@@ -15,6 +15,8 @@ Create/edit products and categories.
 The order and product screens have filters.
 <br><br>
 All actions have a success/error message (snackBarMessenger).
+<br><br>
+All api's consumed were developed in spring boot and made available on heroku, so they may be unavailable at any time.
 <br><br><br>
 
 
