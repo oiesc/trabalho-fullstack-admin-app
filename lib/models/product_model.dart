@@ -41,10 +41,10 @@ class ProductModel {
 }
 
 class CategoryModel {
-  final String id;
+  final String? id;
   final String? name;
 
-  CategoryModel({required this.id, this.name});
+  CategoryModel({this.id, this.name});
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(id: json['id'].toString(), name: json['name']);

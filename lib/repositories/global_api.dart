@@ -88,6 +88,26 @@ class GlobalApi {
   }
 
   Future<bool> deleteProduct(id) async {
-    return await provider.productSendDelete("product/$id");
+    var ret = await provider.productSendDelete("product/$id");
+
+    return ret != false;
+  }
+
+  Future<bool> updateCategory(data) async {
+    var ret = await provider.productSendPut("category", data, "update");
+
+    return ret != false;
+  }
+
+  Future<bool> createCategory(data) async {
+    var ret = await provider.productSendPost("category", data, "create");
+
+    return ret != false;
+  }
+
+  Future<bool> deleteCategory(data) async {
+    var ret = await provider.productSendDelete("category", data: data);
+
+    return ret != false;
   }
 }

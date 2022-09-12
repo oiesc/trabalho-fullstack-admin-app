@@ -14,6 +14,7 @@ abstract class _ProductControllerBase with Store {
   TextEditingController productDescription = TextEditingController();
   TextEditingController productPhotoUrl = TextEditingController();
   TextEditingController productPrice = TextEditingController();
+  TextEditingController categoryName = TextEditingController();
 
   @observable
   bool isLoading = false;
@@ -25,18 +26,26 @@ abstract class _ProductControllerBase with Store {
   String? productCategory;
 
   @observable
-  String? id;
+  String? productId;
+
+  String? categoryId;
 
   @action
   changeProductCategory(value) => productCategory = value;
 
   dispose() {
-    id = null;
+    productId = null;
     productName.clear();
     productDescription.clear();
     productPhotoUrl.clear();
     productPrice.clear();
     productCategory = categories!.first.id;
+    changeLoading(false);
+  }
+
+  categoryDispose() {
+    categoryName.clear();
+    categoryId = null;
     changeLoading(false);
   }
 
@@ -88,7 +97,7 @@ abstract class _ProductControllerBase with Store {
   saveItem(type) async {
     changeLoading(true);
     ProductModel product = ProductModel(
-      id: id,
+      id: productId,
       category: CategoryModel(id: productCategory!),
       name: productName.text,
       description: productDescription.text,
@@ -109,6 +118,28 @@ abstract class _ProductControllerBase with Store {
     var temp = await rep.deleteProduct(id);
     changeLoading(false);
     getProducts();
+    return temp;
+  }
+
+  saveCategory(type) async {
+    changeLoading(true);
+    CategoryModel category =
+        CategoryModel(id: categoryId, name: categoryName.text);
+    var temp = type == "update"
+        ? await rep.updateCategory(category.toJson())
+        : await rep.createCategory(category.toJson());
+    changeLoading(false);
+    getCategories();
+    return temp;
+  }
+
+  deleteCategory() async {
+    changeLoading(true);
+    CategoryModel category =
+        CategoryModel(id: categoryId, name: categoryName.text);
+    var temp = await rep.deleteCategory(category.toJson());
+    changeLoading(false);
+    getCategories();
     return temp;
   }
 }

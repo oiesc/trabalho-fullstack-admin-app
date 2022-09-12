@@ -41,19 +41,19 @@ mixin _$ProductController on _ProductControllerBase, Store {
     });
   }
 
-  late final _$idAtom =
-      Atom(name: '_ProductControllerBase.id', context: context);
+  late final _$productIdAtom =
+      Atom(name: '_ProductControllerBase.productId', context: context);
 
   @override
-  String? get id {
-    _$idAtom.reportRead();
-    return super.id;
+  String? get productId {
+    _$productIdAtom.reportRead();
+    return super.productId;
   }
 
   @override
-  set id(String? value) {
-    _$idAtom.reportWrite(value, super.id, () {
-      super.id = value;
+  set productId(String? value) {
+    _$productIdAtom.reportWrite(value, super.productId, () {
+      super.productId = value;
     });
   }
 
@@ -178,7 +178,7 @@ mixin _$ProductController on _ProductControllerBase, Store {
     return '''
 isLoading: ${isLoading},
 productCategory: ${productCategory},
-id: ${id},
+productId: ${productId},
 listValue: ${listValue},
 categories: ${categories},
 products: ${products},

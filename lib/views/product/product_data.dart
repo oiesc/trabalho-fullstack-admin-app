@@ -1,7 +1,6 @@
 import 'package:adminapp/controllers/product_controller.dart';
 import 'package:adminapp/models/product_model.dart';
 import 'package:adminapp/resources/global_colors.dart';
-import 'package:adminapp/resources/global_scaffold.dart';
 import 'package:adminapp/resources/global_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -23,7 +22,7 @@ class _ProductDataState extends State<ProductData> {
   void initState() {
     super.initState();
     if (widget.product != null) {
-      productController.id = widget.product!.id!;
+      productController.productId = widget.product!.id!;
       productController.productName.text = widget.product!.name!;
       productController.productDescription.text = widget.product!.description!;
       productController.productPhotoUrl.text = widget.product!.photoLocation!;
@@ -120,7 +119,7 @@ class _ProductDataState extends State<ProductData> {
                         child: ElevatedButton(
                             onPressed: () async {
                               if (await productController.saveItem(
-                                      productController.id != null
+                                      productController.productId != null
                                           ? "update"
                                           : "create") !=
                                   null) {
@@ -129,21 +128,22 @@ class _ProductDataState extends State<ProductData> {
                             },
                             child: const Text('Confirm')),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: TextButton(
-                          onPressed: () async {
-                            if (await productController
-                                .deleteItem(widget.product?.id)) {
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: const Text(
-                            'Delete Product',
-                            style: TextStyle(color: GlobalColors.red),
+                      if (widget.product != null)
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: TextButton(
+                            onPressed: () async {
+                              if (await productController
+                                  .deleteItem(widget.product?.id)) {
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: const Text(
+                              'Delete Product',
+                              style: TextStyle(color: GlobalColors.red),
+                            ),
                           ),
                         ),
-                      ),
                     ]),
                   ),
           );

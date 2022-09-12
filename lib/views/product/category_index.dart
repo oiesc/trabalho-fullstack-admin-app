@@ -2,6 +2,7 @@ import 'package:adminapp/controllers/product_controller.dart';
 import 'package:adminapp/models/product_model.dart';
 import 'package:adminapp/resources/global_colors.dart';
 import 'package:adminapp/resources/global_widgets.dart';
+import 'package:adminapp/views/product/category_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -70,6 +71,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ],
                   ));
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CategoryData(),
+            )),
+        child: const Icon(
+          Icons.add,
+        ),
+      ),
     );
   }
 }
@@ -95,7 +106,13 @@ class CategoryWidget extends StatelessWidget {
             color: GlobalColors.silver,
           ),
         InkWell(
-          onTap: () {},
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CategoryData(
+                  category: category,
+                ),
+              )),
           child: Container(
             padding: EdgeInsets.only(
                 left: 16, right: 16, bottom: 8, top: index > 0 ? 8 : 16),

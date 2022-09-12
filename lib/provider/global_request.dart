@@ -71,7 +71,7 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      _showMessage(e.response?.data['message'], type: "error");
+      _showMessage(e.response?.data['message'] ?? "Error", type: "error");
       return false;
     }
   }
@@ -85,7 +85,7 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      _showMessage(e.response?.data['message'], type: "error");
+      _showMessage(e.response?.data['message'] ?? "Error", type: "error");
       return false;
     }
   }
@@ -100,22 +100,22 @@ class GlobalProvider {
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      _showMessage(e.response?.data['message'], type: "error");
+      _showMessage(e.response?.data['message'] ?? "Error", type: "error");
       return false;
     }
   }
 
-  productSendDelete(route) async {
+  productSendDelete(route, {data}) async {
     try {
       String endPoint = apiProductUrl + route;
 
-      var response = await _connection.delete(endPoint);
+      var response = await _connection.delete(endPoint, data: data);
 
       _showMessage("delete", type: "success");
       return response.data;
     } on DioError catch (e) {
       Exception(e.response);
-      _showMessage(e.response?.data['message'], type: "error");
+      _showMessage(e.response?.data['message'] ?? "Error", type: "error");
       return false;
     }
   }
